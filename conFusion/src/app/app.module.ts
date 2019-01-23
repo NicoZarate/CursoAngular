@@ -1,6 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { MatDialogModule, matDialogAnimations } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { FormsModule } from '@angular/forms'
 
 import "hammerjs";
 
@@ -47,12 +51,16 @@ import { LoginComponent } from './login/login.component';
     MatGridListModule,
     MatCardModule,
     MatButtonModule,
+    MatFormFieldModule, 
+    MatInputModule,
+    MatCheckboxModule,
     BrowserAnimationsModule,
     MatToolbarModule,
     MatListModule,
     FlexLayoutModule,
     AppRoutingModule,
-    MatDialogModule
+    MatDialogModule,
+    FormsModule
   ],
   entryComponents: [
     LoginComponent
