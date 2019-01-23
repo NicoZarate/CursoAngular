@@ -1,10 +1,7 @@
-<div class="container"
-    fxLayout="row wrap"
-    fxLayout.sm="column"
-    fxLayout.xs="column"
-    fxLayoutAlign.gt-md="space-around center"
-    fxLayoutGap="10px" 
-    fxLayoutGap.xs="0">
+<div class="container" fxLayout="row wrap" fxLayout.sm="column" fxLayout.xs="column" fxLayoutAlign.gt-md="space-around center"
+  fxLayoutGap="10px" fxLayoutGap.xs="0">
+
+
 
   <div fxFlex="40">
     <div fxFlex *ngIf="dish">
@@ -27,6 +24,10 @@
       </mat-card>
     </div>
   </div>
+  <div [hidden]="dish">
+    <mat-spinner></mat-spinner>
+    <h4>Loading . . . Please Wait</h4>
+  </div>
 
   <div fxFlex="40">
 
@@ -38,8 +39,8 @@
             <span> {{comment.comment}} </span>
           </p>
           <p matLine>
-              <span> {{comment.rating}} Start </span>
-            </p>
+            <span> {{comment.rating}} Start </span>
+          </p>
           <p matLine>
             <span> -{{comment.author}} {{comment.date | date}} </span>
           </p>
@@ -48,5 +49,7 @@
     </mat-list>
 
   </div>
+
+
 
 </div>

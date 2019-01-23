@@ -7,14 +7,15 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ReactiveFormsModule } from '@angular/forms';
-import { FormsModule } from '@angular/forms'
+import { FormsModule } from '@angular/forms';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import "hammerjs";
 
 import { AppComponent } from './app.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatToolbarModule } from '@angular/material/toolbar'; 
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatListModule } from '@angular/material/list';
 import { MatGridListModule } from '@angular/material/grid-list';
@@ -23,7 +24,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { AppRoutingModule } from './app-routing/app-routing.module';
 
 import { MenuComponent } from './menu/menu.component';
-import { DishdetailComponent } from './dishdetail/dishdetail.component' ;
+import { DishdetailComponent } from './dishdetail/dishdetail.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { AboutComponent } from './about/about.component';
@@ -54,7 +55,7 @@ import { LoginComponent } from './login/login.component';
     MatGridListModule,
     MatCardModule,
     MatButtonModule,
-    MatFormFieldModule, 
+    MatFormFieldModule,
     MatInputModule,
     MatCheckboxModule,
     MatSelectModule,
@@ -66,12 +67,13 @@ import { LoginComponent } from './login/login.component';
     AppRoutingModule,
     MatDialogModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule, 
+    MatProgressSpinnerModule
   ],
   entryComponents: [
     LoginComponent
   ],
-  providers: [DishService,PromotionService,LeaderService],
+  providers: [DishService, PromotionService, LeaderService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
