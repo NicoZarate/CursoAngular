@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild, Inject } from '@angular/core';
+import { visibility, expand ,flyInOut } from '../animations/app.animation';
 import { switchMap } from 'rxjs/operators';
 import { Params, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -14,7 +15,12 @@ import { Location } from '@angular/common';
 @Component({
   selector: 'app-dishdetail',
   templateUrl: './dishdetail.component.html',
-  styleUrls: ['./dishdetail.component.scss']
+  styleUrls: ['./dishdetail.component.scss'],
+  animations: [
+    visibility(),
+    flyInOut(),
+    expand()
+  ]
 })
 export class DishdetailComponent implements OnInit {
   @ViewChild('fform') commentFormDirective;
@@ -27,6 +33,7 @@ export class DishdetailComponent implements OnInit {
   next: string;
   errMess: string;
   dishcopy: Dish;
+  visibility = 'shown';
   formErrors = {
     'author': '',
     'comment': ''
@@ -54,8 +61,11 @@ export class DishdetailComponent implements OnInit {
   ngOnInit() {
     this.dishservice.getDishIds().subscribe(dishIds => this.dishIds = dishIds);
     this.route.params
-      .pipe(switchMap((params: Params) => this.dishservice.getDish(params['id'])))
-      .subscribe(dish => { this.dish = dish; this.dishcopy = dish; this.setPrevNext(dish.id); },
+      .pipe(switchMap((params: Params) => {
+      this.visibility = 'hidden'; return this.dishservice
+        .getDish(params['id']);
+      }))
+      .subscribe(dish => { this.dish = dish; this.dishcopy = dish; this.setPrevNext(dish.id); this.visibility = 'shown'; },
         errmess => this.errMess = <any>errmess);
   }
   goBack(): void {
@@ -122,6 +132,6 @@ export class DishdetailComponent implements OnInit {
       .subscribe(dish => {
         this.dish = dish; this.dishcopy = dish;
       },
-      errmess => { this.dish = null; this.dishcopy = null; this.errMess = <any>errmess; });
+        errmess => { this.dish = null; this.dishcopy = null; this.errMess = <any>errmess; });
   }
 }
