@@ -1,7 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { flyInOut, expand } from '../animations/app.animation';
+import { flyInOut, expand, visibility } from '../animations/app.animation';
 import { Feedback, ContactType } from '../shared/feedback';
+import { FeedbackService } from '../services/feedback.service';
+
 
 
 @Component({
@@ -15,7 +17,8 @@ import { Feedback, ContactType } from '../shared/feedback';
   },
   animations: [
     flyInOut(),
-    expand()
+    expand(),
+    visibility()
   ]
 })
 export class ContactComponent implements OnInit {
@@ -23,6 +26,10 @@ export class ContactComponent implements OnInit {
   feedbackForm: FormGroup;
   feedback: Feedback;
   contactType = ContactType;
+  feedbackErrMess = "";
+  auxSubmitting = true;
+  feedbackCopy: Feedback;
+  visibility = 'shown';
   formErrors = {
     'firstname': '',
     'lastname': '',
@@ -51,7 +58,8 @@ export class ContactComponent implements OnInit {
   };
 
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder,
+    private feedbackService: FeedbackService) {
     this.createForm();
   }
 
@@ -95,18 +103,25 @@ export class ContactComponent implements OnInit {
   }
 
   onSubmit() {
-    this.feedback = this.feedbackForm.value;
-    console.log(this.feedback);
-    this.feedbackForm.reset({
-      firstname: '',
-      lastname: '',
-      telnum: 0,
-      email: '',
-      agree: false,
-      contacttype: 'None',
-      message: ''
-    });
-    this.feedbackFormDirective.resetForm();
+    this.feedbackCopy = this.feedbackForm.value;
+    this.feedbackService.postFeedback(this.feedbackCopy)
+      .subscribe(feedback => {
+        this.visibility = 'hidden'; this.auxSubmitting = false;
+        setTimeout(() => { this.auxSubmitting = true; this.feedback = feedback }, 1000)
+      },
+        errmess => {
+          this.visibility = 'hidden'; this.auxSubmitting = false;
+          setTimeout(() => { this.feedback = null, this.auxSubmitting = true, this.feedbackErrMess = <any>errmess }, 1000)
+        })
+
+
+    setTimeout(() => {
+      this.feedback = null;
+      this.feedbackCopy = null;
+      this.feedbackErrMess = null;
+      this.visibility = 'shown';
+      this.feedbackFormDirective.resetForm();
+    }, 6000);
   }
 
 }
