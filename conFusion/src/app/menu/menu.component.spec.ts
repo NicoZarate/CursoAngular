@@ -14,7 +14,6 @@ import { DebugElement } from '@angular/core';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
-
 describe('MenuComponent', () => {
   let component: MenuComponent;
   let fixture: ComponentFixture<MenuComponent>;
@@ -37,7 +36,7 @@ describe('MenuComponent', () => {
       declarations: [ MenuComponent ],
       providers: [
         { provide: DishService, useValue: dishServiceStub },
-        { provide: 'baseURL', useValue: baseURL },
+        { provide: 'BaseURL', useValue: baseURL },
       ]
     })
     .compileComponents();
@@ -45,6 +44,12 @@ describe('MenuComponent', () => {
     const dishservice = TestBed.get(DishService);
 
   }));
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(MenuComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
 
   it('dishes items should be 4', () => {
     expect(component.dishes.length).toBe(4);
@@ -63,4 +68,7 @@ describe('MenuComponent', () => {
     expect(el.textContent).toContain(DISHES[0].name.toUpperCase());
 
   });
+
+
+
 });
